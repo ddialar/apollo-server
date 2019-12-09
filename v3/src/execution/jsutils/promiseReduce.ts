@@ -9,7 +9,7 @@ import { PromiseOrValue } from 'graphql/jsutils/PromiseOrValue';
  * return a Promise.
  */
 export default function promiseReduce<T, U>(
-  values: $ReadOnlyArray<T>,
+  values: readonly T[],
   callback: (U, T) => PromiseOrValue<U>,
   initialValue: PromiseOrValue<U>,
 ): PromiseOrValue<U> {
