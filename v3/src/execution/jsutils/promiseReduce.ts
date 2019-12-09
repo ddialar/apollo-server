@@ -10,7 +10,7 @@ import { PromiseOrValue } from 'graphql/jsutils/PromiseOrValue';
  */
 export default function promiseReduce<T, U>(
   values: readonly T[],
-  callback: (U, T) => PromiseOrValue<U>,
+  callback: (previous: U, value: T) => PromiseOrValue<U>,
   initialValue: PromiseOrValue<U>,
 ): PromiseOrValue<U> {
   return values.reduce(
