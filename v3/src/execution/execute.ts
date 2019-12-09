@@ -622,6 +622,15 @@ export function buildResolveInfo(
     rootValue: exeContext.rootValue,
     operation: exeContext.operation,
     variableValues: exeContext.variableValues,
+    // TODO: This is required by apollo-cache-control's type augmentation but shouldn't
+    // have to be included here.
+    cacheControl: {
+      setCacheHint() {},
+      cacheHint: {
+        maxAge: 0,
+        scope: require('apollo-cache-control').CacheScope.public
+      }
+    }
   };
 }
 
