@@ -9,9 +9,9 @@ export function memoize3<
   V extends MemoArg,
   R
 >(fn: (A1: T, A2: U, A3: V) => R): (A1: T, A2: U, A3: V) => R {
-  let cache0;
+  let cache0: WeakMap<any, any> | undefined;
 
-  function memoized(a1, a2, a3) {
+  function memoized(a1: T, a2: U, a3: V) {
     if (!cache0) {
       cache0 = new WeakMap();
     }
