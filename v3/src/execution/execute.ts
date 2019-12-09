@@ -7,63 +7,59 @@ import devAssert from '../jsutils/devAssert';
 import isInvalid from '../jsutils/isInvalid';
 import isNullish from '../jsutils/isNullish';
 import isPromise from '../jsutils/isPromise';
-import { type ObjMap } from '../jsutils/ObjMap';
+import { ObjMap } from '../jsutils/ObjMap';
 import isObjectLike from '../jsutils/isObjectLike';
 import promiseReduce from '../jsutils/promiseReduce';
 import promiseForObject from '../jsutils/promiseForObject';
-import { type PromiseOrValue } from '../jsutils/PromiseOrValue';
-import { type Path, addPath, pathToArray } from '../jsutils/Path';
-
-import { GraphQLError } from '../error/GraphQLError';
-import { locatedError } from '../error/locatedError';
-
-import { Kind } from '../language/kinds';
+import { PromiseOrValue } from 'graphql/jsutils/PromiseOrValue';
+import { Path, addPath, pathToArray } from 'graphql/jsutils/Path';
+import { GraphQLError ,locatedError } from 'graphql/error';
+import { Kind } from 'graphql/language/kinds';
 import {
-  type DocumentNode,
-  type OperationDefinitionNode,
-  type SelectionSetNode,
-  type FieldNode,
-  type FragmentSpreadNode,
-  type InlineFragmentNode,
-  type FragmentDefinitionNode,
-} from '../language/ast';
+  DocumentNode,
+  OperationDefinitionNode,
+  SelectionSetNode,
+  FieldNode,
+  FragmentSpreadNode,
+  InlineFragmentNode,
+  FragmentDefinitionNode,
+} from 'graphql/language/ast';
 
-import { assertValidSchema } from '../type/validate';
-import { type GraphQLSchema } from '../type/schema';
+import { assertValidSchema } from 'graphql/type/validate';
+import { GraphQLSchema } from 'graphql/type/schema';
 import {
   SchemaMetaFieldDef,
   TypeMetaFieldDef,
   TypeNameMetaFieldDef,
-} from '../type/introspection';
+} from 'graphql/type/introspection';
 import {
   GraphQLIncludeDirective,
   GraphQLSkipDirective,
-} from '../type/directives';
+} from 'graphql/type/directives';
 import {
-  type GraphQLObjectType,
-  type GraphQLOutputType,
-  type GraphQLLeafType,
-  type GraphQLAbstractType,
-  type GraphQLField,
-  type GraphQLFieldResolver,
-  type GraphQLResolveInfo,
-  type GraphQLTypeResolver,
-  type GraphQLList,
+  GraphQLObjectType,
+  GraphQLOutputType,
+  GraphQLLeafType,
+  GraphQLAbstractType,
+  GraphQLField,
+  GraphQLFieldResolver,
+  GraphQLResolveInfo,
+  GraphQLTypeResolver,
+  GraphQLList,
   isObjectType,
   isAbstractType,
   isLeafType,
   isListType,
   isNonNullType,
-} from '../type/definition';
+} from 'graphql/type/definition';
 
-import { typeFromAST } from '../utilities/typeFromAST';
-import { getOperationRootType } from '../utilities/getOperationRootType';
-
+import { typeFromAST } from 'graphql/utilities/typeFromAST';
+import { getOperationRootType } from 'graphql/utilities/getOperationRootType';
 import {
   getVariableValues,
   getArgumentValues,
   getDirectiveValues,
-} from './values';
+} from 'graphql/execution/values';
 
 /**
  * Terminology

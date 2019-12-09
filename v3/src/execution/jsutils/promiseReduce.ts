@@ -1,5 +1,5 @@
 import isPromise from './isPromise';
-import { type PromiseOrValue } from './PromiseOrValue';
+import { PromiseOrValue } from 'graphql/jsutils/PromiseOrValue';
 
 /**
  * Similar to Array.prototype.reduce(), however the reducing callback may return
