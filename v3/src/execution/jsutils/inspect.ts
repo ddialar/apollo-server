@@ -10,7 +10,7 @@ export default function inspect(value: unknown): string {
   return formatValue(value, []);
 }
 
-function formatValue(value, seenValues) {
+function formatValue<T>(value: T, seenValues: T[]): string {
   switch (typeof value) {
     case 'string':
       return JSON.stringify(value);
@@ -26,7 +26,7 @@ function formatValue(value, seenValues) {
   }
 }
 
-function formatObjectValue(value, previouslySeenValues) {
+function formatObjectValue<T>(value: T, previouslySeenValues: T[]): string {
   if (previouslySeenValues.indexOf(value) !== -1) {
     return '[Circular]';
   }
@@ -51,7 +51,7 @@ function formatObjectValue(value, previouslySeenValues) {
   return formatObject(value, seenValues);
 }
 
-function formatObject(object, seenValues) {
+function formatObject<T extends Record<string, any>>(object: T, seenValues: T[]): string {
   const keys = Object.keys(object);
   if (keys.length === 0) {
     return '{}';
@@ -69,7 +69,9 @@ function formatObject(object, seenValues) {
   return '{ ' + properties.join(', ') + ' }';
 }
 
-function formatArray(array, seenValues) {
+// TODO: struggling to replace these `any`s with type variables
+// Best attempt: formatArray<U, T extends U[]>(array: T, seenValues: T[])
+function formatArray(array: any, seenValues: any): string {
   if (array.length === 0) {
     return '[]';
   }
@@ -95,7 +97,11 @@ function formatArray(array, seenValues) {
   return '[' + items.join(', ') + ']';
 }
 
-function getCustomFn(object) {
+// TODO: get rid of this `any`.
+// This is troublesome because getCustomFn is expected to be called on an object,
+// but if you notice the callsite, `object` could be an Array as well. TS doesn't
+// like this idea of trying to access an array's index by string and throws an error.
+function getCustomFn(object: any) {
   const customInspectFn = object[String(nodejsCustomInspectSymbol)];
 
   if (typeof customInspectFn === 'function') {
@@ -107,7 +113,7 @@ function getCustomFn(object) {
   }
 }
 
-function getObjectTag(object) {
+function getObjectTag<T extends Record<string, any>>(object: T): string {
   const tag = Object.prototype.toString
     .call(object)
     .replace(/^\[object /, '')
