@@ -236,7 +236,7 @@ export function buildExecutionContext(
   fieldResolver: Maybe<GraphQLFieldResolver<unknown, unknown>>,
   typeResolver?: Maybe<GraphQLTypeResolver<unknown, unknown>>,
 ): readonly GraphQLError[] | ExecutionContext {
-  let operation: OperationDefinitionNode | void;
+  let operation: OperationDefinitionNode | undefined;
   const fragments: ObjMap<FragmentDefinitionNode> = Object.create(null);
   for (const definition of document.definitions) {
     switch (definition.kind) {
@@ -341,7 +341,7 @@ function executeFieldsSerially(
   exeContext: ExecutionContext,
   parentType: GraphQLObjectType,
   sourceValue: unknown,
-  path: Path | void,
+  path: Path | undefined,
   fields: ObjMap<Array<FieldNode>>,
 ): PromiseOrValue<ObjMap<unknown>> {
   return promiseReduce(
@@ -380,7 +380,7 @@ function executeFields(
   exeContext: ExecutionContext,
   parentType: GraphQLObjectType,
   sourceValue: unknown,
-  path: Path | void,
+  path: Path | undefined,
   fields: ObjMap<Array<FieldNode>>,
 ): PromiseOrValue<ObjMap<unknown>> {
   const results = Object.create(null);
