@@ -1,4 +1,4 @@
-import nodejsCustomInspectSymbol from './nodejsCustomInspectSymbol';
+import { nodejsCustomInspectSymbol } from './nodejsCustomInspectSymbol';
 
 const MAX_ARRAY_LENGTH = 10;
 const MAX_RECURSIVE_DEPTH = 2;
@@ -6,7 +6,7 @@ const MAX_RECURSIVE_DEPTH = 2;
 /**
  * Used to print values in error messages.
  */
-export default function inspect(value: unknown): string {
+export function inspect(value: unknown): string {
   return formatValue(value, []);
 }
 

@@ -1,4 +1,4 @@
-import isPromise from './isPromise';
+import { isPromise } from '.';
 import { PromiseOrValue } from 'graphql/jsutils/PromiseOrValue';
 
 /**
@@ -8,7 +8,7 @@ import { PromiseOrValue } from 'graphql/jsutils/PromiseOrValue';
  * If the callback does not return a Promise, then this function will also not
  * return a Promise.
  */
-export default function promiseReduce<T, U>(
+export function promiseReduce<T, U>(
   values: readonly T[],
   callback: (previous: U, value: T) => PromiseOrValue<U>,
   initialValue: PromiseOrValue<U>,

@@ -1,4 +1,4 @@
-import { ObjMap } from './ObjMap';
+import { ObjMap } from '.';
 
 /**
  * This function transforms a JS object `ObjMap<Promise<T>>` into
@@ -7,7 +7,7 @@ import { ObjMap } from './ObjMap';
  * This is akin to bluebird's `Promise.props`, but implemented only using
  * `Promise.all` so it will work with any implementation of ES6 promises.
  */
-export default function promiseForObject<T>(
+export function promiseForObject<T>(
   object: ObjMap<Promise<T>>,
 ): Promise<ObjMap<T>> {
   const keys = Object.keys(object);

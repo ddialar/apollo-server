@@ -2,7 +2,7 @@
  * Returns true if the value acts like a Promise, i.e. has a "then" function,
  * otherwise returns false.
  */
-export default function isPromise<T>(value: any): value is PromiseLike<T> {
+export function isPromise<T>(value: any): value is PromiseLike<T> {
   return value != null && typeof value.then === 'function';
 }
 

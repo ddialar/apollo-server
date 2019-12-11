@@ -1,16 +1,17 @@
 import { forEach, isCollection } from 'iterall';
-
-import inspect from '../jsutils/inspect';
-import memoize3 from '../jsutils/memoize3';
-import invariant from '../jsutils/invariant';
-import devAssert from '../jsutils/devAssert';
-import isInvalid from '../jsutils/isInvalid';
-import isNullish from '../jsutils/isNullish';
-import isPromise from '../jsutils/isPromise';
-import { ObjMap } from '../jsutils/ObjMap';
-import isObjectLike from '../jsutils/isObjectLike';
-import promiseReduce from '../jsutils/promiseReduce';
-import promiseForObject from '../jsutils/promiseForObject';
+import {
+  inspect,
+  memoize3,
+  invariant,
+  devAssert,
+  isInvalid,
+  isNullish,
+  isPromise,
+  ObjMap,
+  isObjectLike,
+  promiseReduce,
+  promiseForObject,
+} from './jsutils';
 import { PromiseOrValue } from 'graphql/jsutils/PromiseOrValue';
 import { Path, addPath, pathToArray } from 'graphql/jsutils/Path';
 import { GraphQLError ,locatedError } from 'graphql/error';
