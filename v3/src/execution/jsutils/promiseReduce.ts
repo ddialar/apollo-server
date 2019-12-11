@@ -1,5 +1,3 @@
-// @flow strict
-
 import isPromise from './isPromise';
 import { type PromiseOrValue } from './PromiseOrValue';
 

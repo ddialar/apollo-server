@@ -1,5 +1,3 @@
-// @flow strict
-
 /**
  * Returns true if a value is null, undefined, or NaN.
  */

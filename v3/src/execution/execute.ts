@@ -1,5 +1,3 @@
-// @flow strict
-
 import { forEach, isCollection } from 'iterall';
 
 import inspect from '../jsutils/inspect';
