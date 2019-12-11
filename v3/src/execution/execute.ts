@@ -24,6 +24,7 @@ import {
   FragmentSpreadNode,
   InlineFragmentNode,
   FragmentDefinitionNode,
+  ASTNode,
 } from 'graphql/language/ast';
 
 import { assertValidSchema } from 'graphql/type/validate';
@@ -164,8 +165,14 @@ export function execute(args: ExecutionArgs): PromiseOrValue<ExecutionResult> {
     typeResolver,
   );
 
+  function isExecutionContext(
+    maybeContext: any
+  ): maybeContext is ExecutionContext {
+    return !Array.isArray(maybeContext);
+  }
+
   // Return early errors if execution context failed.
-  if (Array.isArray(exeContext)) {
+  if (!isExecutionContext(exeContext)) {
     return { errors: exeContext };
   }
 
@@ -722,7 +729,13 @@ function completeValueCatchingError(
   }
 }
 
-function handleFieldError(rawError, fieldNodes, path, returnType, exeContext) {
+function handleFieldError(
+  rawError: unknown,
+  fieldNodes: readonly ASTNode[],
+  path: Path,
+  returnType: GraphQLOutputType,
+  exeContext: ExecutionContext
+) {
   const error = locatedError(
     asErrorInstance(rawError),
     fieldNodes,
@@ -872,8 +885,8 @@ function completeListValue(
   // where the list contains no Promises by avoiding creating another Promise.
   const itemType = returnType.ofType;
   let containsPromise = false;
-  const completedResults = [];
-  forEach((result: any), (item, index) => {
+  const completedResults: any[] = [];
+  forEach(result as any, (item, index) => {
     // No need to modify the info object containing the path,
     // since from here on it is not ever accessed by resolver functions.
     const fieldPath = addPath(path, index);
@@ -1101,7 +1114,10 @@ function _collectSubfields(
  * Otherwise, test each possible type for the abstract type by calling
  * isTypeOf for the object being coerced, returning the first type that matches.
  */
-export const defaultTypeResolver: GraphQLTypeResolver<unknown, unknown> = function(
+export const defaultTypeResolver: GraphQLTypeResolver<
+  { __typename: string },
+  unknown
+> = function(
   value,
   contextValue,
   info,
@@ -1137,8 +1153,10 @@ export const defaultTypeResolver: GraphQLTypeResolver<unknown, unknown> = functi
           return possibleTypes[i];
         }
       }
+      return;
     });
   }
+  return;
 };
 
 /**
@@ -1149,7 +1167,7 @@ export const defaultTypeResolver: GraphQLTypeResolver<unknown, unknown> = functi
  */
 export const defaultFieldResolver: GraphQLFieldResolver<
   unknown,
-  unknown,
+  unknown
 > = function(source: any, args, contextValue, info) {
   // ensure source is a value for which property access is acceptable.
   if (isObjectLike(source) || typeof source === 'function') {
