@@ -203,7 +203,7 @@ export function assertValidExecutionArguments(
   schema: GraphQLSchema,
   document: DocumentNode,
   rawVariableValues: ?{ +[variable: string]: mixed, ... },
-): void {
+): asserts rawVariableValues {
   devAssert(document, 'Must provide document');
 
   // If the schema used for execution is invalid, throw an error.
