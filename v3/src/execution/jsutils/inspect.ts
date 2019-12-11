@@ -6,7 +6,7 @@ const MAX_RECURSIVE_DEPTH = 2;
 /**
  * Used to print values in error messages.
  */
-export default function inspect(value: mixed): string {
+export default function inspect(value: unknown): string {
   return formatValue(value, []);
 }
 

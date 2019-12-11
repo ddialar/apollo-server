@@ -1,4 +1,4 @@
-export default function invariant(condition: mixed, message?: string): asserts condition {
+export default function invariant(condition: unknown, message?: string): asserts condition {
   const booleanCondition = Boolean(condition);
   if (!booleanCondition) {
     throw new Error(
