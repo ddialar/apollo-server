@@ -1,12 +1,14 @@
 /**
  * Memoizes the provided three-argument function.
  */
-export default function memoize3<
-  A1: { ... } | $ReadOnlyArray<mixed>,
-  A2: { ... } | $ReadOnlyArray<mixed>,
-  A3: { ... } | $ReadOnlyArray<mixed>,
-  R: mixed,
->(fn: (A1, A2, A3) => R): (A1, A2, A3) => R {
+type MemoArg = {[key: string]: any} | readonly any[];
+
+export function memoize3<
+  T extends MemoArg,
+  U extends MemoArg,
+  V extends MemoArg,
+  R
+>(fn: (A1: T, A2: U, A3: V) => R): (A1: T, A2: U, A3: V) => R {
   let cache0;
 
   function memoized(a1, a2, a3) {

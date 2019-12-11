@@ -87,17 +87,17 @@ import {
  * Namely, schema of the type system that is currently executing,
  * and the fragments defined in the query document
  */
-export type ExecutionContext = {|
+export type ExecutionContext = {
   schema: GraphQLSchema,
   fragments: ObjMap<FragmentDefinitionNode>,
   rootValue: mixed,
   contextValue: mixed,
   operation: OperationDefinitionNode,
-  variableValues: { [variable: string]: mixed, ... },
+  variableValues: { [variable: string]: mixed },
   fieldResolver: GraphQLFieldResolver<any, any>,
   typeResolver: GraphQLTypeResolver<any, any>,
   errors: Array<GraphQLError>,
-|};
+};
 
 /**
  * The result of GraphQL execution.
@@ -105,21 +105,21 @@ export type ExecutionContext = {|
  *   - `errors` is included when any errors occurred as a non-empty array.
  *   - `data` is the result of a successful execution of the query.
  */
-export type ExecutionResult = {|
-  errors?: $ReadOnlyArray<GraphQLError>,
+export type ExecutionResult = {
+  errors?: readonly GraphQLError[],
   data?: ObjMap<mixed> | null,
-|};
+};
 
-export type ExecutionArgs = {|
+export type ExecutionArgs = {
   schema: GraphQLSchema,
   document: DocumentNode,
   rootValue?: mixed,
   contextValue?: mixed,
-  variableValues?: ?{ +[variable: string]: mixed, ... },
+  variableValues?: ?{ readonly [variable: string]: mixed },
   operationName?: ?string,
   fieldResolver?: ?GraphQLFieldResolver<any, any>,
   typeResolver?: ?GraphQLTypeResolver<any, any>,
-|};
+};
 
 /**
  * Implements the "Evaluating requests" section of the GraphQL specification.
@@ -202,7 +202,7 @@ function buildResponse(
 export function assertValidExecutionArguments(
   schema: GraphQLSchema,
   document: DocumentNode,
-  rawVariableValues: ?{ +[variable: string]: mixed, ... },
+  rawVariableValues: ?{ readonly [variable: string]: mixed },
 ): asserts rawVariableValues {
   devAssert(document, 'Must provide document');
 
@@ -229,7 +229,7 @@ export function buildExecutionContext(
   document: DocumentNode,
   rootValue: mixed,
   contextValue: mixed,
-  rawVariableValues: ?{ +[variable: string]: mixed, ... },
+  rawVariableValues: ?{ readonly [variable: string]: mixed },
   operationName: ?string,
   fieldResolver: ?GraphQLFieldResolver<mixed, mixed>,
   typeResolver?: ?GraphQLTypeResolver<mixed, mixed>,
@@ -843,7 +843,7 @@ function completeValue(
   invariant(
     false,
     'Cannot complete value of unexpected output type: ' +
-      inspect((returnType: empty)),
+      inspect(returnType),
   );
 }
 
